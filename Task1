@@ -1,0 +1,72 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class NumberGame
+{
+    public static void main(String[] args)
+    {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        System.out.println("                                                                           -----------------                               ");
+        System.out.println("                                                                           |  Number Game  |                               ");
+        System.out.println("                                                                           -----------------                               ");
+
+        do
+        {
+            int maxNumber = 100;
+            int randomNumber = random.nextInt(maxNumber) + 1;
+            int maxAttempts = 10;
+            int userGuess;
+            int attempts = 0;
+
+            System.out.println("A random number between (1-100) has been selected for you.");
+            System.out.println("Try to guess it correctly in " + maxAttempts + " attempts.\n");
+            System.out.println("Let's begin the game..");
+
+            while (attempts < maxAttempts)
+            {
+                System.out.print("Guess the number (enter 0 to exit): ");
+                userGuess = scanner.nextInt();
+                attempts++;
+
+                if (userGuess == 0)
+                {
+                    System.out.println("Thank you for playing! You're Exiting the game.");
+                    System.exit(0);
+                }
+                if (userGuess == randomNumber)
+                {
+                    System.out.println("Congratulations! You have guessed the number correctly in just " + attempts + " attempts.\n");
+
+                    break;
+                }
+                else if (userGuess < randomNumber)
+                {
+                    System.out.println("Go for a higher number.");
+                }
+                else
+                {
+                    System.out.println("Try a lower number instead.");
+                }
+            }
+
+            if (attempts == maxAttempts)
+            {
+                System.out.println("Sorry, you ran out of attempts. The correct number was: " + randomNumber);
+            }
+
+            System.out.print("Would you like to play again? (Yes/No):");
+            String playAgain = scanner.next().toLowerCase();
+
+            if (!playAgain.equals("yes"))
+            {
+                System.out.println("Thank you for playing! You're Exiting the game.");
+                break;
+            }
+
+        }
+        while (true);
+        scanner.close();
+    }
+}
