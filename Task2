@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class StudentGrade {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\t   \t Student Grade Calculator\n");
+        System.out.println("Enter the marks (out of 100) for each subject:");
+
+        System.out.print("AM-II: ");
+        int subject1 = scanner.nextInt();
+
+        System.out.print("TOC: ");
+        int subject2 = scanner.nextInt();
+
+        System.out.print("MPCA: ");
+        int subject3 = scanner.nextInt();
+
+        System.out.print("CN: ");
+        int subject4 = scanner.nextInt();
+
+        System.out.print("Java: ");
+        int subject5 = scanner.nextInt();
+
+        int totalMarks = subject1 + subject2 + subject3 + subject4 + subject5;
+
+        double averagePercentage = totalMarks / 5.0;
+
+        String grade;
+        if (averagePercentage >= 90) {
+            grade = "A+\nKeep it up!";
+        } else if (averagePercentage>=85) {
+            grade = "A\nGood";
+        } else if (averagePercentage >= 80) {
+            grade = "B\nCan be better";
+        } else if (averagePercentage >= 70) {
+            grade = "C\nNeed to be improved!!";
+        } else if (averagePercentage >= 60) {
+            grade = "D\nPoor Performance";
+        } else {
+            grade = "F\nFail!!!";
+        }
+
+        System.out.println("\nResults:");
+        System.out.println("Total Marks: " + totalMarks + " / 500");
+        System.out.println("Average Percentage: " + averagePercentage + "%");
+        System.out.println("Grade: " + grade);
+
+        scanner.close();
+    }
+}
