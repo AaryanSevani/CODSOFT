@@ -1,1 +1,1 @@
-# Project of Internship at CODSOFT
+# Projects of my Internship at CODSOFT
