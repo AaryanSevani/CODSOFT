@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CurrencyConvertor {
+    private static final String API_URL = "https://api.exchangerate-api.com/v4/latest/";
+
+    public static void main(String[] args) {
+        System.out.print("\t  \t  \t   -------------------------------\n");
+        System.out.println("\t  \t  \t    Welcome to Currency Convertor");
+        System.out.print("\t  \t  \t   -------------------------------\n");
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+            System.out.print("Enter your base currency: ");
+            String baseCurrency = reader.readLine().toUpperCase();
+
+            System.out.print("Enter your target currency: ");
+            String targetCurrency = reader.readLine().toUpperCase();
+
+            System.out.print("Enter the amount you want to convert: ");
+            double amount = Double.parseDouble(reader.readLine());
+
+            Map<String, Double> exchangeRates = fetchExchangeRates(baseCurrency);
+
+            double exchangeRate = exchangeRates.get(targetCurrency);
+            double convertedAmount = amount * exchangeRate;
+
+            System.out.printf("%.2f %s = %.2f %s\n", amount, baseCurrency, convertedAmount, targetCurrency);
+            System.out.print("Enter your base currency: ");
+
+            System.out.print("\nThank you for using Currency Convertor..!!");
+
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Map<String, Double> fetchExchangeRates(String baseCurrency) throws IOException {
+        Map<String, Double> exchangeRates = new HashMap<>();
+        URL url = new URL(API_URL + baseCurrency);
+        URLConnection connection = url.openConnection();
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String inputLine;
+
+        while ((inputLine = in.readLine()) != null) {
+            if (inputLine.contains("\"rates\":")) {
+                String[] parts = inputLine.split("\"rates\":\\{")[1].split("}")[0].split(",");
+                for (String part : parts) {
+                    String[] keyValue = part.split(":");
+                    exchangeRates.put(keyValue[0].replace("\"", ""), Double.parseDouble(keyValue[1]));
+                }
+                break;
+            }
+        }
+        in.close();
+
+        return exchangeRates;
+    }
+}
